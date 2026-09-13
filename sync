@@ -1,9 +1,0 @@
-#!/data/data/com.termux/files/usr/bin/env bash
-
-#			#
-git add -A		#step _00000001
-#			#
-git commit -m "commit"	#step _00000010
-#			#
-git push		#step _00000011
-#			#
