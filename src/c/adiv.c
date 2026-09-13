@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-enum status {UNKNOWN, OPTION, INPUT, OUTPUT} stt;
+enum status {UNKNOWN, OPTION, INPUT, OUTPUT};
 
 struct string_dictionary {
-	stt key;
+	enum status key;
 	char* value;
-}
+};
 
 int main(int argc, char** argv) {
 	enum status cmdstt = UNKNOWN;
-	struct string_dictionary args[argc];
+	struct string_dictionary args[argc] = {0};
 	int numof_inputfile = 0;
 	int numof_outputfile = 0;
 	for (int i = 1; i < argc; ++i) {
@@ -34,6 +34,10 @@ int main(int argc, char** argv) {
 				}
 		}
 	}
+	if (!numof_inputfile)
+		return 0;
+	if (!numof_outputfile)
+		return 0;
 	FILE* ifp[numof_inputfile];
 	FILE* ofp[numof_outputfile];
 	return 0;
