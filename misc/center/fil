@@ -1,0 +1,29 @@
+target_directory="$1"
+
+find "$target_directory" -depth -type d | while IFS= read -r current_directory; do
+    placeholder_path="$current_directory/.placeholder"
+
+    has_real_entry=false
+    has_placeholder=false
+
+    while IFS= read -r -d '' entry_path; do
+        entry_name="$(basename "$entry_path")"
+
+        if [ "$entry_name" = ".placeholder" ]; then
+            has_placeholder=true
+            continue
+        fi
+
+        if [ -f "$entry_path" ] || [ -L "$entry_path" ] || [ -p "$entry_path" ] || [ -S "$entry_path" ] || [ -b "$entry_path" ] || [ -c "$entry_path" ]; then
+            has_real_entry=true
+        fi
+    done < <(find "$current_directory" -mindepth 1 -maxdepth 1 -print0)
+
+    if [ "$has_real_entry" = false ] && [ "$has_placeholder" = false ]; then
+        touch "$placeholder_path"
+    fi
+
+    if [ "$has_real_entry" = true ] && [ "$has_placeholder" = true ]; then
+        rm -f "$placeholder_path"
+    fi
+done
