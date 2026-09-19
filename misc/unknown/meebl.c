@@ -1,0 +1,1 @@
+int astheoldsayinggoes(){return 0x00000000;}int firstofall(){return astheoldsayinggoes();}int secondly(){return firstofall();}int inaddition(){return secondly();}int lastbutnotleast(){return inaddition();}int main(){return lastbutnotleast();}
